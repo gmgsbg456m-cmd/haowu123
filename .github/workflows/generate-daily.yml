@@ -1,0 +1,47 @@
+name: 🤖 每日自动生成文章
+
+on:
+  schedule:
+    # 每天北京时间 08:00 (UTC 00:00) 自动运行
+    - cron: '0 0 * * *'
+  # 也支持手动触发
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: '指定话题（留空则自动选择）'
+        required: false
+        type: string
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+
+      - name: 🟢 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 安装依赖
+        run: npm install
+
+      - name: ✍️ 生成文章
+        run: node scripts/generate-content.js ${{ github.event.inputs.topic || '' }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 📤 提交并推送
+        run: |
+          git config user.name "🤖 自动写作机器人"
+          git config user.email "bot@haowu123.com"
+          git add src/content/blog/ data/
+          git diff --staged --quiet || (git commit -m "📝 自动生成文章: $(date +%Y-%m-%d)" && git push)
+
+      - name: 🚀 触发Cloudflare Pages部署
+        run: |
+          echo "文章已推送到仓库，Cloudflare Pages将自动部署"

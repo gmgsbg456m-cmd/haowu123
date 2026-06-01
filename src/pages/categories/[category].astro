@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { CATEGORIES } from '../../config';
+import { getCollection } from 'astro:content';
+import { getSlug } from '../../utils/post';
+
+export async function getStaticPaths() {
+  return CATEGORIES.map(cat => ({
+    params: { category: cat.slug },
+  }));
+}
+
+const { category } = Astro.params;
+const catInfo = CATEGORIES.find(c => c.slug === category);
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts
+  .filter(p => p.data.category === category)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout title={catInfo?.name || category}>
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="text-4xl">
+        {category === 'digital' && '📱'}
+        {category === 'home' && '🏠'}
+        {category === 'kitchen' && '🍳'}
+        {category === 'office' && '💼'}
+        {category === 'travel' && '✈️'}
+        {category === 'personal-care' && '💄'}
+      </span>
+      <div>
+        <h1 class="text-3xl md:text-4xl font-black text-gray-900">{catInfo?.name || category}</h1>
+        <p class="text-gray-500">{catInfo?.description} · {posts.length} 篇文章</p>
+      </div>
+    </div>
+
+    {
+      posts.length === 0 ? (
+        <div class="text-center py-16 text-gray-400">
+          <p class="text-5xl mb-4">📭</p>
+          <p class="text-xl">暂无文章，敬请期待</p>
+        </div>
+      ) : (
+        <div class="grid md:grid-cols-3 gap-6">
+          {posts.map(post => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              slug={getSlug(post.id)}
+              category={post.data.category}
+              tags={post.data.tags}
+              heroImage={post.data.heroImage}
+            />
+          ))}
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

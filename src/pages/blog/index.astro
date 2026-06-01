@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import { getSlug } from '../../utils/post';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const page = Number(Astro.url.searchParams.get('page') || 1);
+const perPage = 12;
+const totalPages = Math.ceil(posts.length / perPage);
+const paginatedPosts = posts.slice((page - 1) * perPage, page * perPage);
+---
+
+<BaseLayout title="全部文章">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-2">📝 全部文章</h1>
+    <p class="text-gray-500 mb-8">共 {posts.length} 篇好物推荐文章</p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {paginatedPosts.map(post => (
+        <ArticleCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          slug={getSlug(post.id)}
+          category={post.data.category}
+          tags={post.data.tags}
+          heroImage={post.data.heroImage}
+        />
+      ))}
+    </div>
+
+    <!-- 分页 -->
+    {
+      totalPages > 1 && (
+        <div class="flex justify-center gap-2 mt-10">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+            <a
+              href={`/blog?page=${p}`}
+              class={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                p === page
+                  ? 'bg-primary-500 text-white'
+                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+              }`}
+            >
+              {p}
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

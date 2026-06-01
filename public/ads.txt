@@ -1,0 +1,5 @@
+# AdSense
+google.com, pub-xxxxxxxxxxxxxxxx, DIRECT, f08c47fec0942fa0
+
+# 淘宝联盟
+# taobao.com, pid=mm_xxxxxxxx, DIRECT

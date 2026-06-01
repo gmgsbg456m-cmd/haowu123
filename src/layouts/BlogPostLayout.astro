@@ -1,0 +1,157 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import AdUnit from '../components/AdUnit.astro';
+import AffiliateCard from '../components/AffiliateCard.astro';
+import JsonLD from '../components/JsonLD.astro';
+import { formatDate } from '../utils/date';
+import { getReadingTime } from '../utils/readingTime';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, category, affiliateProducts } = post.data;
+const readingTime = getReadingTime(post.body || '');
+
+// 提取标题用于目录
+const headings = (post.body || '').match(/^#{2,3}\s+.+$/gm) || [];
+const toc = headings.map(h => {
+  const level = h.startsWith('### ') ? 3 : 2;
+  const text = h.replace(/^#{2,3}\s+/, '');
+  const id = text.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9一-鿿-]/g, '');
+  return { level, text, id };
+});
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate || pubDate).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: '好物推荐官',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '好物123',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': Astro.url.href,
+  },
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalURL={Astro.url.href}
+  schema={articleSchema}
+>
+  <article class="max-w-7xl mx-auto px-4 py-8">
+    <div class="flex gap-8">
+      <!-- 主内容区 -->
+      <div class="flex-1 min-w-0 max-w-3xl mx-auto">
+        <!-- 文章头部 -->
+        <header class="mb-8">
+          <div class="flex items-center gap-3 text-sm text-gray-500 mb-4">
+            <a href={`/categories/${category}`} class="tag bg-primary-50 text-primary-700 hover:bg-primary-100">
+              {category}
+            </a>
+            <time datetime={pubDate.toISOString()}>
+              {formatDate(pubDate)}
+            </time>
+            <span>·</span>
+            <span>{readingTime} 分钟阅读</span>
+          </div>
+
+          <h1 class="text-3xl md:text-4xl font-black text-gray-900 leading-tight text-balance">
+            {title}
+          </h1>
+
+          {
+            description && (
+              <p class="mt-4 text-xl text-gray-500 leading-relaxed">
+                {description}
+              </p>
+            )
+          }
+
+          {
+            tags.length > 0 && (
+              <div class="flex flex-wrap gap-2 mt-4">
+                {tags.map(tag => (
+                  <a href={`/tags/${tag}`} class="tag">{tag}</a>
+                ))}
+              </div>
+            )
+          }
+        </header>
+
+        <!-- 文章头图 -->
+        {
+          heroImage && (
+            <img
+              src={heroImage}
+              alt={title}
+              class="w-full rounded-2xl shadow-md mb-10 object-cover max-h-96"
+              width="1200"
+              height="630"
+              loading="eager"
+            />
+          )
+        }
+
+        <!-- 广告位 #1: 文章开头 -->
+        <AdUnit slot="in-article-top" />
+
+        <!-- 正文内容 -->
+        <div class="prose-cn">
+          <slot />
+        </div>
+
+        <!-- 好物推荐卡片 -->
+        {
+          affiliateProducts && affiliateProducts.length > 0 && (
+            <div class="mt-12 p-6 bg-gradient-to-br from-primary-50 to-orange-50 rounded-2xl border border-primary-100">
+              <h3 class="text-xl font-bold text-gray-900 mb-4">🛒 文中推荐好物</h3>
+              <div class="grid gap-4 md:grid-cols-2">
+                {affiliateProducts.map(product => (
+                  <AffiliateCard productName={product} />
+                ))}
+              </div>
+            </div>
+          )
+        }
+
+        <!-- 广告位 #2: 文章结尾 -->
+        <AdUnit slot="in-article-bottom" />
+
+        <!-- 声明 -->
+        <div class="mt-10 p-4 bg-gray-100 rounded-xl text-sm text-gray-500">
+          <p>📌 <strong>免责声明：</strong>本文部分链接为联盟营销链接，如果您通过链接购买商品，我们可能会获得少量佣金，这不会影响您的购买价格。我们仅推荐真实使用过或经过仔细研究的产品。</p>
+        </div>
+      </div>
+
+      <!-- 侧边栏 -->
+      <aside class="hidden lg:block w-72 flex-shrink-0">
+        <div class="sticky top-24 space-y-6">
+          <!-- 目录 -->
+          {
+            toc.length > 0 && (
+              <TableOfContents headings={toc} />
+            )
+          }
+
+          <!-- 侧边栏广告 -->
+          <AdUnit slot="sidebar" />
+        </div>
+      </aside>
+    </div>
+  </article>
+</BaseLayout>

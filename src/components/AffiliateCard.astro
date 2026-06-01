@@ -1,0 +1,40 @@
+---
+interface Props {
+  productName: string;
+  price?: string;
+  imageUrl?: string;
+  shopLink?: string;
+  rating?: number;
+}
+
+const { productName, price = '价格待查', imageUrl, shopLink = '#', rating = 4.5 } = Astro.props;
+const stars = Math.round(rating);
+---
+
+<div class="product-card p-4 flex gap-4 items-center">
+  <!-- 商品图片 -->
+  <div class="w-24 h-24 flex-shrink-0 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
+    {imageUrl ? (
+      <img src={imageUrl} alt={productName} class="w-full h-full object-cover" loading="lazy" />
+    ) : (
+      <span class="text-3xl">📦</span>
+    )}
+  </div>
+
+  <!-- 商品信息 -->
+  <div class="flex-1 min-w-0">
+    <h4 class="font-semibold text-gray-900 truncate">{productName}</h4>
+    <div class="star-rating text-sm mt-1">
+      {Array.from({ length: 5 }, (_, i) => (
+        <span>{i < stars ? '⭐' : '☆'}</span>
+      ))}
+      <span class="text-gray-400 text-xs ml-1">{rating}</span>
+    </div>
+    <div class="flex items-center gap-3 mt-2">
+      <span class="text-primary-600 font-bold text-lg">{price}</span>
+      <a href={shopLink} target="_blank" rel="nofollow sponsored" class="btn-buy text-sm px-4 py-1.5">
+        去购买 →
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+name: 📚 每周批量生成5篇（Batch API）
+
+on:
+  schedule:
+    # 每周一北京时间 10:00 (UTC 02:00)
+    - cron: '0 2 * * 1'
+  workflow_dispatch:
+
+jobs:
+  batch-generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+
+      - name: 🟢 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📦 安装依赖
+        run: npm install
+
+      - name: 📝 批量生成5篇文章
+        run: |
+          for i in 1 2 3 4 5; do
+            echo "正在生成第 ${i} 篇文章..."
+            node scripts/generate-content.js
+            sleep 5  # API限速保护
+          done
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 📤 提交所有文章
+        run: |
+          git config user.name "🤖 自动写作机器人"
+          git config user.email "bot@haowu123.com"
+          git add src/content/blog/ data/
+          git diff --staged --quiet || (git commit -m "📚 批量生成5篇文章: $(date +%Y-%m-%d)" && git push)
