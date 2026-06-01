@@ -25,7 +25,7 @@ export const ADS = {
   },
   affiliate: {
     taobaoPid: 'mm_xxxxxxxx', // 淘宝联盟PID
-    jdUnionId: 'xxxxxxxx',    // 京东联盟ID
+    jdUnionId: '2038230197',    // 京东联盟ID
     enabled: true,
   },
 };
