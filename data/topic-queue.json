@@ -1,22 +1,97 @@
 [
-  { "topic": "2025年性价比最高的智能手表推荐：从300元到3000元全价位指南", "category": "digital", "priority": 9 },
-  { "topic": "租房党必备的20件实用好物清单", "category": "home", "priority": 9 },
-  { "topic": "2025空气炸锅选购指南：从入门到高端全价位推荐", "category": "kitchen", "priority": 8 },
-  { "topic": "远程办公必备的10款效率工具推荐", "category": "office", "priority": 8 },
-  { "topic": "露营新手装备清单：从帐篷到炊具的全套推荐", "category": "travel", "priority": 8 },
-  { "topic": "男士护肤入门指南：从洗面奶到面霜的全套推荐", "category": "personal-care", "priority": 8 },
-  { "topic": "2025年最佳手机配件推荐：充电器、手机壳、贴膜、支架", "category": "digital", "priority": 7 },
-  { "topic": "小户型收纳神器推荐：让30平米住出60平米的感觉", "category": "home", "priority": 9 },
-  { "topic": "IH电饭煲VS普通电饭煲：2025年电饭煲选购终极指南", "category": "kitchen", "priority": 7 },
-  { "topic": "人体工学椅选购指南：从1000元到10000元怎么选", "category": "office", "priority": 9 },
-  { "topic": "2025年20寸登机箱推荐：商务出行必备", "category": "travel", "priority": 7 },
-  { "topic": "电动牙刷选购指南：Oral-B vs 飞利浦 vs 国产品牌", "category": "personal-care", "priority": 8 },
-  { "topic": "2025年最佳降噪耳机推荐：地铁通勤必备", "category": "digital", "priority": 8 },
-  { "topic": "扫地机器人选购指南：科沃斯vs石头vs追觅哪个好", "category": "home", "priority": 9 },
-  { "topic": "不粘锅选购指南：涂层安全、耐用性全解析", "category": "kitchen", "priority": 7 },
-  { "topic": "机械键盘选购指南：红轴青轴茶轴怎么选", "category": "office", "priority": 8 },
-  { "topic": "保温杯推荐：膳魔师vs象印vs虎牌哪个保温最好", "category": "travel", "priority": 6 },
-  { "topic": "2025夏季防晒霜推荐：油皮、干皮、敏感肌全攻略", "category": "personal-care", "priority": 9 },
-  { "topic": "平板电脑推荐：iPad vs 华为 vs 小米 2025年怎么选", "category": "digital", "priority": 8 },
-  { "topic": "家用投影仪推荐：2025年千元投影仪选购指南", "category": "home", "priority": 8 }
+  {
+    "topic": "租房党必备的20件实用好物清单",
+    "category": "home",
+    "priority": 9
+  },
+  {
+    "topic": "小户型收纳神器推荐：让30平米住出60平米的感觉",
+    "category": "home",
+    "priority": 9
+  },
+  {
+    "topic": "人体工学椅选购指南：从1000元到10000元怎么选",
+    "category": "office",
+    "priority": 9
+  },
+  {
+    "topic": "扫地机器人选购指南：科沃斯vs石头vs追觅哪个好",
+    "category": "home",
+    "priority": 9
+  },
+  {
+    "topic": "2025夏季防晒霜推荐：油皮、干皮、敏感肌全攻略",
+    "category": "personal-care",
+    "priority": 9
+  },
+  {
+    "topic": "2025空气炸锅选购指南：从入门到高端全价位推荐",
+    "category": "kitchen",
+    "priority": 8
+  },
+  {
+    "topic": "远程办公必备的10款效率工具推荐",
+    "category": "office",
+    "priority": 8
+  },
+  {
+    "topic": "露营新手装备清单：从帐篷到炊具的全套推荐",
+    "category": "travel",
+    "priority": 8
+  },
+  {
+    "topic": "男士护肤入门指南：从洗面奶到面霜的全套推荐",
+    "category": "personal-care",
+    "priority": 8
+  },
+  {
+    "topic": "电动牙刷选购指南：Oral-B vs 飞利浦 vs 国产品牌",
+    "category": "personal-care",
+    "priority": 8
+  },
+  {
+    "topic": "2025年最佳降噪耳机推荐：地铁通勤必备",
+    "category": "digital",
+    "priority": 8
+  },
+  {
+    "topic": "机械键盘选购指南：红轴青轴茶轴怎么选",
+    "category": "office",
+    "priority": 8
+  },
+  {
+    "topic": "平板电脑推荐：iPad vs 华为 vs 小米 2025年怎么选",
+    "category": "digital",
+    "priority": 8
+  },
+  {
+    "topic": "家用投影仪推荐：2025年千元投影仪选购指南",
+    "category": "home",
+    "priority": 8
+  },
+  {
+    "topic": "2025年最佳手机配件推荐：充电器、手机壳、贴膜、支架",
+    "category": "digital",
+    "priority": 7
+  },
+  {
+    "topic": "IH电饭煲VS普通电饭煲：2025年电饭煲选购终极指南",
+    "category": "kitchen",
+    "priority": 7
+  },
+  {
+    "topic": "2025年20寸登机箱推荐：商务出行必备",
+    "category": "travel",
+    "priority": 7
+  },
+  {
+    "topic": "不粘锅选购指南：涂层安全、耐用性全解析",
+    "category": "kitchen",
+    "priority": 7
+  },
+  {
+    "topic": "保温杯推荐：膳魔师vs象印vs虎牌哪个保温最好",
+    "category": "travel",
+    "priority": 6
+  }
 ]
