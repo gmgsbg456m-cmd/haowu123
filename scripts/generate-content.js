@@ -29,7 +29,6 @@ const CONFIG = {
   minWords: 1500,
   model: 'deepseek-chat',  // DeepSeek V3，中文写作优秀
   apiBase: 'https://api.deepseek.com/v1',
-};
   language: 'zh-CN',
 };
 
