@@ -1,17 +1,34 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "strictNullChecks": true,
-    "allowJs": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@utils/*": ["src/utils/*"],
-      "@data/*": ["data/*"]
-    }
-  },
-  "include": ["src/**/*", "scripts/**/*"],
-  "exclude": ["node_modules", "dist"]
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"allowJs": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": [
+				"src/*"
+			],
+			"@components/*": [
+				"src/components/*"
+			],
+			"@layouts/*": [
+				"src/layouts/*"
+			],
+			"@utils/*": [
+				"src/utils/*"
+			],
+			"@data/*": [
+				"data/*"
+			]
+		}
+	},
+	"include": [
+		"src/**/*",
+		"scripts/**/*",
+		"./worker-configuration.d.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist"
+	]
 }
